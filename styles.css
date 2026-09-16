@@ -205,6 +205,11 @@ textarea {
     margin-bottom: 20px; /* Թիվը մեծացնելով՝ կմեծացնես հեռավորությունը տողերի միջև */
 }
 
+.form-group label {
+    display: block;
+    margin-bottom: 8px;  /* Վերնագրի և վանդակի (input-ի) միջև հեռավորությունը */
+}
+
 .btn-send {
     display: inline-block;
     position: relative;
