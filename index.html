@@ -154,14 +154,16 @@
 <script>
   const sendBtn = document.querySelector('.btn-send');
   if (sendBtn) {
+    sendBtn.addEventListener('mouseenter', () => {
+      sendBtn.classList.remove('exiting');
+      sendBtn.classList.add('filling');
+    });
+
     sendBtn.addEventListener('mouseleave', () => {
-      sendBtn.classList.add('exit');
-      setTimeout(() => {
-        sendBtn.classList.remove('exit');
-      }, 400);
+      sendBtn.classList.remove('filling');
+      sendBtn.classList.add('exiting');
     });
   }
 </script>
-
 </body>
 </html>
