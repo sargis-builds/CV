@@ -151,5 +151,17 @@
 </body>
 </html>
 
+<script>
+  const sendBtn = document.querySelector('.btn-send');
+  if (sendBtn) {
+    sendBtn.addEventListener('mouseleave', () => {
+      sendBtn.classList.add('exit');
+      setTimeout(() => {
+        sendBtn.classList.remove('exit');
+      }, 400);
+    });
+  }
+</script>
+
 </body>
 </html>
