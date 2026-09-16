@@ -201,6 +201,10 @@ textarea {
     border-color: #ffb74d;
 }
 
+.form-group {
+    margin-bottom: 20px; /* Թիվը մեծացնելով՝ կմեծացնես հեռավորությունը տողերի միջև */
+}
+
 .btn-send {
     display: inline-block;
     position: relative;
