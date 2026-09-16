@@ -109,37 +109,6 @@
     font-weight: 600;
 }
 
-.tracks-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.track-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 183, 77, 0.3);
-    color: #ffb74d;
-    padding: 10px 18px;
-    border-radius: 20px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9em;
-    transition: all 0.3s ease;
-}
-
-.track-btn:hover {
-    background: rgba(255, 183, 77, 0.15);
-    border-color: #ffb74d;
-    color: #ffffff;
-    transform: translateY(-2px);
-    text-decoration: underline;
-}
-
-
 
 .skills-container {
     display: flex;
