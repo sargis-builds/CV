@@ -166,23 +166,26 @@
     font-weight: 600;
 }
 
-
+/* Դաշտերի բազային ոճերը */
 input[type="text"],
 input[type="email"],
 textarea {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 8px;
-    padding: 10px;
+    padding: 12px;
     color: #fff;
     width: 100%;
     box-sizing: border-box;
-    margin-top: 5px;
     outline: none;
     transition: border-color 0.3s ease;
 }
 
+textarea {
+    resize: vertical; 
+}
 
+/* Hover և Focus էֆեկտներ */
 input[type="text"]:hover,
 input[type="email"]:hover,
 textarea:hover,
@@ -192,22 +195,17 @@ textarea:focus {
     border-color: #ffb74d;
 }
 
-textarea {
-    resize: vertical; 
-}
-
-.form-group input:hover,
-.form-group textarea:hover {
-    border-color: #ffb74d;
-}
-
+/* 1. Ամբողջական դաշտերի իրարից հեռավորությունը (մեծացրել ենք 30px) */
 .form-group {
-    margin-bottom: 20px; /* Թիվը մեծացնելով՝ կմեծացնես հեռավորությունը տողերի միջև */
+    margin-bottom: 30px; 
 }
 
+/* 2. Վերնագրի (Your Name) հեռավորությունը դաշտից */
 .form-group label {
     display: block;
-    margin-bottom: 8px;  /* Վերնագրի և վանդակի (input-ի) միջև հեռավորությունը */
+    margin-bottom: 10px;
+    color: #fff;
+    font-weight: 500;
 }
 
 .btn-send {
