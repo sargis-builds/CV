@@ -201,7 +201,6 @@ textarea {
     border-color: #ffb74d;
 }
 
-/* Կոճակի հիմնական ոճը */
 .btn-send {
     display: inline-block;
     position: relative;
@@ -217,11 +216,10 @@ textarea {
     cursor: pointer;
     z-index: 1;
     margin-top: 15px;
-    transition: color 0.4s ease;
     outline: none;
+    transition: color 0.4s ease;
 }
 
-/* Անիմացվող ոսկեգույն ֆոնը (ձախից-աջ) */
 .btn-send::before {
     content: '';
     position: absolute;
@@ -231,24 +229,33 @@ textarea {
     height: 100%;
     background-color: #fdc673;
     z-index: -1;
-    transform: translateX(100%);
-    transition: transform 0.4s ease;
+    transform: translateX(-100%);
 }
 
-/* Hover (մկնիկը վրան) — լցվում է ձախից աջ */
-.btn-send:hover::before {
-    transform: translateX(0);
+/* Մկնիկը մտնելիս՝ լցվում է ձախից աջ (▶) */
+.btn-send.filling::before {
+    animation: fillRight 0.4s forwards;
 }
 
-.btn-send.exit::before {
-    transform: translateX(100%);
-    transition: transform 0.4s ease;
+/* Մկնիկը հեռանալիս՝ շարունակում է գնալ դեպի աջ ու դուրս գալ (▶) */
+.btn-send.exiting::before {
+    animation: exitRight 0.4s forwards;
 }
 
-/* Hover-ի ժամանակ տեքստի գույնը */
+@keyframes fillRight {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes exitRight {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(100%); }
+}
+
 .btn-send:hover {
     color: #1a1a1a;
 }
+
 footer {
   text-align: center;
   padding: 20px;
