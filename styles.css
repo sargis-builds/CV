@@ -303,6 +303,15 @@ footer {
     transition: color 0.3s ease;
 }
 
+.social-links a {
+    color: #fdc673;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
+
 .social-links a:hover {
     color: #fdc673;
 }
