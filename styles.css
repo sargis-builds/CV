@@ -201,53 +201,64 @@ textarea {
     border-color: #ffb74d;
 }
 
-/* Կոճակի թարմացված հիմնական ոճը */
-.contact-form button,
+/* 1. Կոճակի հիմնական ոճը */
+.card button,
+.card input[type="submit"],
 button[type="submit"] {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;          /* ::before-ի համար */
-    overflow: hidden;            /* Ավելորդ մասերը թաքցնելու համար */
-    width: fit-content;          /* Լայնությունը դառնում է ըստ տեքստի չափի */
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    width: fit-content !important;   /* Լայնությունը դառնում է ըստ տեքստի */
     padding: 12px 32px;
-    background-color: transparent; /* Թափանցիկ ֆոն՝ նախնական վիճակում */
-    border: 2px solid #fdc673;   /* Միայն ոսկեգույն սահմանագիծ */
-    color: #fdc673;               /* Ոսկեգույն տեքստ նախնական վիճակում */
+    background: transparent;
+    border: 2px solid #fdc673;
+    color: #fdc673;
     border-radius: 30px;
     font-size: 1em;
     font-weight: 600;
     cursor: pointer;
-    transition: color 0.4s ease; /* Տեքստի գույնի փոփոխության համար */
-    z-index: 1;                  /* Որպեսզի ::before-ը տեքստի տակ լինի */
+    transition: color 0.4s ease;
+    z-index: 1;
+    margin-top: 10px;
 }
 
-
-/* Անիմացվող ֆոնային շերտ (ձախից-աջ) */
-.contact-form button::before {
+/* 2. Անիմացվող շերտի սկզբնական վիճակը (դուրս է գալիս դեպի ԱՋ) */
+.card button::before,
+.card input[type="submit"]::before,
+button[type="submit"]::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #fdc673;   /* Նույն ոսկեգույն ֆոնը */
-    border-radius: 30px;
-    z-index: -1;                 /* Տեքստի տակ */
-    transform: translateX(-100%); /* Սկսում է կոճակի ձախից դուրս */
-    transition: transform 0.4s ease, border-radius 0s; /* Արագության կարգավորում */
+    background-color: #fdc673;
+    z-index: -1;
+    transform: translateX(-100%);     /* Սկսում է ձախից դուրս */
+    transition: transform 0.4s ease;
 }
 
-/* Hover (երբ մկնիկը գալիս է վրեն) — ձախից աջ լցվել */
-.contact-form button:hover::before {
-    transform: translateX(0);    /* Լցվում է մինչև վերջ */
+/* 3. Hover (Մկնիկը վրան) — Լցվում է ձախից դեպի աջ */
+.card button:hover::before,
+.card input[type="submit"]:hover::before,
+button[type="submit"]:hover::before {
+    transform: translateX(0);         /* Լցվում է ամբողջությամբ */
 }
 
-/* Hover-ի ժամանակ տեքստի գույնը փոխել դեպի մուգ */
-.contact-form button:hover {
-    color: #1a1a1a;              /* Մուգ գույն՝ բաց ֆոնի վրա կարդացվելու համար */
+/* 4. Mouseout (Մկնիկը հեռացնելիս) — Գնում է դեպի ԱՋ դուրս */
+.card button:not(:hover)::before,
+.card input[type="submit"]:not(:hover)::before,
+button[type="submit"]:not(:hover)::before {
+    transform: translateX(100%);       /* Շարունակում է շարժվել դեպի աջ */
+    transition: transform 0.4s ease;
 }
 
+/* 5. Տեքստի գույնը hover-ի ժամանակ */
+.card button:hover,
+.card input[type="submit"]:hover,
+button[type="submit"]:hover {
+    color: #1a1a1a;
+}
 
 footer {
   text-align: center;
