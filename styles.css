@@ -201,26 +201,53 @@ textarea {
     border-color: #ffb74d;
 }
 
-input[type="submit"] {
-    width: 100%;
-    background: transparent;
-    border: 2px solid #ffb74d;
-    color: #ffb74d;
-    padding: 14px 20px;
-    border-radius: 25px;
-    font-weight: 700;
+/* Կոճակի թարմացված հիմնական ոճը */
+.contact-form button,
+button[type="submit"] {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;          /* ::before-ի համար */
+    overflow: hidden;            /* Ավելորդ մասերը թաքցնելու համար */
+    width: fit-content;          /* Լայնությունը դառնում է ըստ տեքստի չափի */
+    padding: 12px 32px;
+    background-color: transparent; /* Թափանցիկ ֆոն՝ նախնական վիճակում */
+    border: 2px solid #fdc673;   /* Միայն ոսկեգույն սահմանագիծ */
+    color: #fdc673;               /* Ոսկեգույն տեքստ նախնական վիճակում */
+    border-radius: 30px;
     font-size: 1em;
+    font-weight: 600;
     cursor: pointer;
-    
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: color 0.4s ease; /* Տեքստի գույնի փոփոխության համար */
+    z-index: 1;                  /* Որպեսզի ::before-ը տեքստի տակ լինի */
 }
 
-input[type="submit"]:hover {
-    background: #ffb74d; 
-    color: #121212; 
-    transform: scale(1.02) translateY(-3px);
-    box-shadow: 0 0 25px rgba(255, 183, 77, 0.6);
+
+/* Անիմացվող ֆոնային շերտ (ձախից-աջ) */
+.contact-form button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fdc673;   /* Նույն ոսկեգույն ֆոնը */
+    border-radius: 30px;
+    z-index: -1;                 /* Տեքստի տակ */
+    transform: translateX(-100%); /* Սկսում է կոճակի ձախից դուրս */
+    transition: transform 0.4s ease, border-radius 0s; /* Արագության կարգավորում */
 }
+
+/* Hover (երբ մկնիկը գալիս է վրեն) — ձախից աջ լցվել */
+.contact-form button:hover::before {
+    transform: translateX(0);    /* Լցվում է մինչև վերջ */
+}
+
+/* Hover-ի ժամանակ տեքստի գույնը փոխել դեպի մուգ */
+.contact-form button:hover {
+    color: #1a1a1a;              /* Մուգ գույն՝ բաց ֆոնի վրա կարդացվելու համար */
+}
+
 
 footer {
   text-align: center;
