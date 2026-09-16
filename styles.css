@@ -201,14 +201,12 @@ textarea {
     border-color: #ffb74d;
 }
 
-/* 1. Կոճակի հիմնական ոճը */
-.card button,
-.card input[type="submit"],
-button[type="submit"] {
+/* Կոճակի հիմնական ոճը */
+.btn-send {
     display: inline-block;
     position: relative;
     overflow: hidden;
-    width: fit-content !important;   /* Լայնությունը դառնում է ըստ տեքստի */
+    width: fit-content;
     padding: 12px 32px;
     background: transparent;
     border: 2px solid #fdc673;
@@ -217,15 +215,14 @@ button[type="submit"] {
     font-size: 1em;
     font-weight: 600;
     cursor: pointer;
-    transition: color 0.4s ease;
     z-index: 1;
-    margin-top: 10px;
+    margin-top: 15px;
+    transition: color 0.4s ease;
+    outline: none;
 }
 
-/* 2. Անիմացվող շերտի սկզբնական վիճակը (դուրս է գալիս դեպի ԱՋ) */
-.card button::before,
-.card input[type="submit"]::before,
-button[type="submit"]::before {
+/* Անիմացվող ոսկեգույն ֆոնը (ձախից-աջ) */
+.btn-send::before {
     content: '';
     position: absolute;
     top: 0;
@@ -234,32 +231,24 @@ button[type="submit"]::before {
     height: 100%;
     background-color: #fdc673;
     z-index: -1;
-    transform: translateX(-100%);     /* Սկսում է ձախից դուրս */
+    transform: translateX(-100%);
     transition: transform 0.4s ease;
 }
 
-/* 3. Hover (Մկնիկը վրան) — Լցվում է ձախից դեպի աջ */
-.card button:hover::before,
-.card input[type="submit"]:hover::before,
-button[type="submit"]:hover::before {
-    transform: translateX(0);         /* Լցվում է ամբողջությամբ */
+/* Hover (մկնիկը վրան) — լցվում է ձախից աջ */
+.btn-send:hover::before {
+    transform: translateX(0);
 }
 
-/* 4. Mouseout (Մկնիկը հեռացնելիս) — Գնում է դեպի ԱՋ դուրս */
-.card button:not(:hover)::before,
-.card input[type="submit"]:not(:hover)::before,
-button[type="submit"]:not(:hover)::before {
-    transform: translateX(100%);       /* Շարունակում է շարժվել դեպի աջ */
-    transition: transform 0.4s ease;
+/* Mouseout (մկնիկը հեռացնելիս) — դուրս է գալիս դեպի աջ */
+.btn-send:not(:hover)::before {
+    transform: translateX(100%);
 }
 
-/* 5. Տեքստի գույնը hover-ի ժամանակ */
-.card button:hover,
-.card input[type="submit"]:hover,
-button[type="submit"]:hover {
+/* Hover-ի ժամանակ տեքստի գույնը */
+.btn-send:hover {
     color: #1a1a1a;
 }
-
 footer {
   text-align: center;
   padding: 20px;
