@@ -1,39 +1,37 @@
- body {
-           background: linear-gradient(135deg, #121212 0%, #4a1515 100%);
+body {
+    background: linear-gradient(135deg, #121212 0%, #4a1515 100%);
     background-attachment: fixed;
-            color: #e8e8e8;
+    color: #e8e8e8;
+    font: normal 16px 'Roboto', sans-serif;  
+}
 
-            font: normal 16px 'Roboto', sans-serif;  
-        }
-        h1 {
-            color:#ffb74d;
-        }
+h1 {
+    color: #ffb74d;
+}
 
-        h2 {
-            font-size: 30px 'Roboto', sans-serif;  
-            color: #ffb74d;
-        }
-        
-        a, a:visited {
-            color: #fdc673;
-        }
+h2 {
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;  
+    color: #ffb74d;
+}
 
+a, a:visited {
+    color: #fdc673;
+}
 
-        a:hover {
-            color: #c57157;
+a:hover {
+    color: #c57157;
+}
 
-        }
-
-    .avatar {
-        width: 180px;
-        border-radius: 20px;
-        box-shadow: 4px 6px 14px rgb(35, 32, 25)
-    }
+.avatar {
+    width: 180px;
+    border-radius: 20px;
+    box-shadow: 4px 6px 14px rgb(35, 32, 25);
+}
 
 .info p {
     color: rgb(108, 34, 34);
     margin: 0;
-
 }
 
 .container {
@@ -71,94 +69,38 @@
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
-
-.skills-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 15px;
-}
-
-.skill-tag {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 183, 77, 0.3);
-    color: #e0e0e0;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.9em;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    margin-bottom: 4px;
-}
-
-.skill-tag:hover {
-    background: rgba(255, 183, 77, 0.15);
-    border-color: #ffb74d;
-    color: #fff;
-    transform: translateY(-2px); 
-
-}
-
-.languages-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 15px;
-}
-
-.language-tag {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 183, 77, 0.3);
-    color: #e0e0e0;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.9em;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    margin-bottom: 4px;
-}
-
-.language-tag:hover {
-    background: rgba(255, 183, 77, 0.15);
-    border-color: #ffb74d;
-    color: #fff;
-    transform: translateY(-2px); 
-
-}
-
+.skills-container,
+.languages-container,
 .hobbies-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
     margin-top: 15px;
 }
 
+.skill-tag,
+.language-tag,
 .hobby-tag {
+    display: inline-block;
     background: rgba(255, 255, 255, 0.07);
     border: 1px solid rgba(255, 183, 77, 0.3);
     color: #e0e0e0;
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 0.9em;
+    font-weight: 500;
     transition: all 0.3s ease;
-    cursor: default;
+    margin-bottom: 4px;
 }
 
+.skill-tag:hover,
+.language-tag:hover,
 .hobby-tag:hover {
     background: rgba(255, 183, 77, 0.15);
     border-color: #ffb74d;
-    color: #ffffff;
+    color: #fff;
     transform: translateY(-2px);
 }
-
-.hobby-tag a:hover {
-
-    text-decoration: underline;
-
-}
-
 
 .hobby-tag a {
     color: #ffb74d;
@@ -166,7 +108,11 @@
     font-weight: 600;
 }
 
-/* Դաշտերի բազային ոճերը */
+.hobby-tag a:hover {
+    text-decoration: underline;
+}
+
+/* Կոնտակտային ֆորմայի ոճեր */
 input[type="text"],
 input[type="email"],
 textarea {
@@ -185,7 +131,6 @@ textarea {
     resize: vertical; 
 }
 
-/* Hover և Focus էֆեկտներ */
 input[type="text"]:hover,
 input[type="email"]:hover,
 textarea:hover,
@@ -195,12 +140,10 @@ textarea:focus {
     border-color: #ffb74d;
 }
 
-/* 1. Ամբողջական դաշտերի իրարից հեռավորությունը (մեծացրել ենք 30px) */
 .form-group {
     margin-bottom: 30px; 
 }
 
-/* 2. Վերնագրի (Your Name) հեռավորությունը դաշտից */
 .form-group label {
     display: block;
     margin-bottom: 10px;
@@ -208,6 +151,7 @@ textarea:focus {
     font-weight: 500;
 }
 
+/* Կոճակի անիմացիոն ոճեր */
 .btn-send {
     display: inline-block;
     position: relative;
@@ -239,18 +183,16 @@ textarea:focus {
     transform: translateX(-100%);
 }
 
-/* Մկնիկը մտնելիս՝ լցվում է ձախից աջ (▶) */
 .btn-send.filling::before {
     animation: fillRight 0.4s forwards;
 }
 
-/* Մկնիկը հեռանալիս՝ շարունակում է գնալ դեպի աջ ու դուրս գալ (▶) */
 .btn-send.exiting::before {
     animation: exitRight 0.4s forwards;
 }
 
 @keyframes fillRight {
-    -100% { transform: translateX(0%); }
+    0% { transform: translateX(-100%); }
     100% { transform: translateX(0); }
 }
 
@@ -263,32 +205,7 @@ textarea:focus {
     color: #1a1a1a;
 }
 
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #888;
-  font-size: 0.85em;
-  margin-top: 30px;
-}
-
-.footer-contacts {
-  margin-bottom: 10px;
-}
-
-.footer-contacts a {
-  color: #fdc673;
-  text-decoration: none;
-}
-
-.footer-contacts a:hover {
-  text-decoration: underline;
-}
-
-.footer-contacts span {
-  margin: 0 6px;
-  color: #666;
-}
-
+/* Ֆութերի ոճեր */
 footer {
     text-align: center;
     padding: 40px 20px;
@@ -303,24 +220,16 @@ footer {
 }
 
 .social-links a {
-    color: #fff;
+    color: #fdc673;
     text-decoration: none;
     margin: 0 15px;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
-.social-links a {
-    color: #fdc673;
-    text-decoration: none;
-}
-
 .social-links a:hover {
     text-decoration: underline;
-}
-
-.social-links a:hover {
-    color: #fdc673;
+    color: #ffb74d;
 }
 
 .footer-contacts {
