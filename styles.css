@@ -71,6 +71,63 @@
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.skill-tag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 183, 77, 0.3);
+    color: #e0e0e0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-bottom: 4px;
+}
+
+.skill-tag:hover {
+    background: rgba(255, 183, 77, 0.15);
+    border-color: #ffb74d;
+    color: #fff;
+    transform: translateY(-2px); 
+
+}
+
+.Languages-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.language-tag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 183, 77, 0.3);
+    color: #e0e0e0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-bottom: 4px;
+}
+
+.language-tag:hover {
+    background: rgba(255, 183, 77, 0.15);
+    border-color: #ffb74d;
+    color: #fff;
+    transform: translateY(-2px); 
+
+}
+
 .hobbies-container {
     display: flex;
     flex-wrap: wrap;
@@ -109,34 +166,6 @@
     font-weight: 600;
 }
 
-
-.skills-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 15px;
-}
-
-.skill-tag {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 183, 77, 0.3);
-    color: #e0e0e0;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.9em;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    margin-bottom: 4px;
-}
-
-.skill-tag:hover {
-    background: rgba(255, 183, 77, 0.15);
-    border-color: #ffb74d;
-    color: #fff;
-    transform: translateY(-2px); 
-
-}
 
 input[type="text"],
 input[type="email"],
