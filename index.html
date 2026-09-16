@@ -8,100 +8,110 @@
 <body>
     <div class="container">
         <section class="card">
-                    
-    <table cellspacing="20">
-        <tr>
-            <td>
-                <img src="avatar.jpg" alt="here is my picture" class="avatar" />
-            </td>
-            <td>
-                <h1>Sargis Vardanyan</h1>
-                <p>I am <strong>a Junior Frontend Developer</strong> with a background in fine arts. I combine a strong eye for UI/UX design with clean, functional code to build responsive and modern web interfaces.</p>
-            </td>
-        </tr>
-    </table>
+            <table cellspacing="20">
+                <tr>
+                    <td>
+                        <img src="avatar.jpg" alt="here is my picture" class="avatar" />
+                    </td>
+                    <td>
+                        <h1>Sargis Vardanyan</h1>
+                        <p>I am <strong>a Junior Frontend Developer</strong> with a background in fine arts. I combine a strong eye for UI/UX design with clean, functional code to build responsive and modern web interfaces.</p>
+                    </td>
+                </tr>
+            </table>
         </section>
 
-    <section class="card">
-        <table> 
-    <h2>Education</h2>
-    <div class="education-container">
-        <div class="education-item">
-            <div class="edu-details">
-                <span class="edu-institution">Panos Terlemezyan Art College —</span>
-                <span class="edu-degree">Painting</span>
+        <section class="card">
+            <h2>Education</h2>
+            <div class="education-container">
+                <div class="education-item">
+                    <div class="edu-details">
+                        <span class="edu-institution">Panos Terlemezyan Art College —</span>
+                        <span class="edu-degree">Painting</span>
+                    </div>
+                    <span class="edu-year">2015 - 2022</span>
+                </div>
+                
+                <div class="education-item">
+                    <div class="edu-details">
+                        <span class="edu-institution">State Academy of Fine Arts of Armenia —</span>
+                        <span class="edu-degree">Graphics</span>
+                    </div>
+                    <span class="edu-year">2022 - 2026</span>
+                </div>
             </div>
-            <span class="edu-year">2015 - 2022</span>
+        </section>
+
+        <section class="card">
+            <h2>Skills</h2>
+            <div class="skills-container">
+                <span class="skill-tag">AI tools</span>
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">Git & GitHub</span>
+                <span class="skill-tag">Responsive Design</span>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Languages</h2>
+            <div class="languages-container">
+                <span class="language-tag">Armenian — Native</span>
+                <span class="language-tag">English — B1</span>
+                <span class="language-tag">Russian — B1</span>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Hobbies & Interests</h2>
+            <div class="hobbies-container">
+                <span class="hobby-tag">Music</span>
+                <span class="hobby-tag">Animation</span>    
+                <span class="hobby-tag">Sports (Football, Running)</span>
+                <span class="hobby-tag">Traveling</span>  
+            </div>
+        </section>
+
+        <section class="card">
+            <form id="contact-form" action="https://formspree.io/f/xbgjwqjl" method="POST">
+                <h2>Contact Me</h2>
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="Type your name..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" name="email" placeholder="Type your email..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Type your message..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn-send">Send Message</button>
+                <p id="form-status"></p>
+            </form>
+        </section>
+    </div>
+
+    <footer>    
+        <div class="footer-contacts">
+            <a href="https://github.com/sargis-builds" target="_blank">GitHub</a>
+            <span>•</span>
+            <a href="https://t.me/sargis787" target="_blank">Telegram</a>
+            <span>•</span>
+            <a href="mailto:vardanyansargis13@gmail.com">vardanyansargis13@gmail.com</a>
+            <span>•</span>
+            <span>Stepanavan, Armenia</span>
+            <span>•</span>
+            <a href="tel:+37494763563">+374 94 763-563</a>
         </div>
         
-        <div class="education-item">
-            <div class="edu-details">
-                <span class="edu-institution">State Academy of Fine Arts of Armenia —</span>
-                <span class="edu-degree">Graphics</span>
-            </div>
-            <span class="edu-year">2022 - 2026</span>
-        </div>
-    </div>
-    </table>
-    </section>
-
-        
-    <section class="card">
-        <h2>Skills</h2>
-    <div class="skils-container">
-        <span class="skill-tag">AI tools</span>
-        <span class="skill-tag">HTML5</span>
-        <span class="skill-tag">CSS3</span>
-        <span class="skill-tag">JavaScript</span>
-        <span class="skill-tag">Git & GitHub</span>
-        <span class="skill-tag">Responsive Design</span>
-    </div>
-    </section>
-
-    <section class="card">
-        <h2>Languages</h2>
-    <div class="languages-container">
-        <span class="language-tag">Armenian — Native</span>
-         <span class="language-tag">English — B1</span>
-        <span class="language-tag">Russian — B1</span>
-    </div>
-    </section>
-
-    <section class="card">
-<h2>Hobbies & Interests</h2>
-    <div class="hobbies-container">
-        <span class="hobby-tag">Music</span>
-        <span class="hobby-tag">Animation</span>   
-        <span class="hobby-tag">Sports (Football, Running)</span>
-         <span class="hobby-tag">Traveling</span> 
-    </div>
-    </section>
-
-
-    <section class="card">
-        <form id="contact-form" action="https://formspree.io/f/xbgjwqjl" method="POST">
-        <h2>Contact Me</h2>
-    <div class="form-group">
-    <label for="name">Your Name</label>
-    <input type="text" id="name" name="name" placeholder="Type your name..." required>
-</div>
-
-<div class="form-group">
-    <label for="email">Your Email</label>
-    <input type="email" id="email" name="email" placeholder="Type your email..." required>
-</div>
-
-<div class="form-group">
-    <label for="message">Your Message</label>
-    <textarea id="message" name="message" rows="4" placeholder="Type your message..." required></textarea>
-</div>
-        <br><br>
-       <button type="submit" class="btn-send">Send Message</button>
-    <p id="form-status"></p>
-    </form>
-    </section>
-    
-    </div>
+        <p>&copy; 2026 Sargis Vardanyan. All rights reserved.</p>
+    </footer>
 
     <script>
     const form = document.getElementById('contact-form');
@@ -136,40 +146,21 @@
             status.textContent = 'Oops! There was a problem submitting your form.';
         }
     });
-</script>
+    </script>
 
+    <script>
+      const sendBtn = document.querySelector('.btn-send');
+      if (sendBtn) {
+        sendBtn.addEventListener('mouseenter', () => {
+          sendBtn.classList.remove('exiting');
+          sendBtn.classList.add('filling');
+        });
 
-<footer>    
-    <div class="footer-contacts">
-      <a href="https://https://github.com/sargis-builds" target="_blank">GitHub</a>
-      <span>•</span>
-      <a href="https://t.me/sargis787" target="_blank">Telegram</a>
-        <p></p>
-      <a href="mailto:vardanyansargis13@gmail.com">vardanyansargis13@gmail.com</a>
-      <span>•</span>
-      <span>Stepanavan, Armenia</span>
-      <span>•</span>
-     <a href="tel:+37494763563">+374 94 763-563</a>
-    </div>
-    
-    <p>&copy; 2026 Sargis Vardanyan. All rights reserved.</p>
-  </div>
-</footer>
-
-
-<script>
-  const sendBtn = document.querySelector('.btn-send');
-  if (sendBtn) {
-    sendBtn.addEventListener('mouseenter', () => {
-      sendBtn.classList.remove('exiting');
-      sendBtn.classList.add('filling');
-    });
-
-    sendBtn.addEventListener('mouseleave', () => {
-      sendBtn.classList.remove('filling');
-      sendBtn.classList.add('exiting');
-    });
-  }
-</script>
+        sendBtn.addEventListener('mouseleave', () => {
+          sendBtn.classList.remove('filling');
+          sendBtn.classList.add('exiting');
+        });
+      }
+    </script>
 </body>
 </html>
