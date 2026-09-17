@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <title>Castle Warfare: Epic Clash</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
+
+        html, body {
+            background: #0f172a;
+            color: #ffffff;
+            font-family: 'Fredoka', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .screen {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .active-screen {
+            display: flex;
+        }
+
+        .box-container {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            border: 2px solid rgba(245, 158, 11, 0.4);
+            border-radius: 24px;
+            width: 90%;
+            max-width: 700px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        .box-container h2 {
+            font-size: 26px;
+            margin-top: 0;
+            color: #fbbf24;
+        }
+
+        .battle-arena-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: #090d16;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        button {
+            background: linear-gradient(180deg, #0ea5e9, #0284c7);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-weight: 600;
+            font-family: 'Fredoka', cursive, sans-serif;
+            font-size: 13px;
+            box-shadow: 0 4px 0 #0369a1, 0 4px 10px rgba(0,0,0,0.3);
+            transition: all 0.1s ease;
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #0369a1, 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        button:disabled {
+            background: #334155;
+            border-color: rgba(255, 255, 255, 0.05);
+            color: #64748b;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Առանց ընդհանուր սև վահանակի՝ սիրուն կոճակներ ուղղակիորեն ձախ մասում */
+        #hud-left-panel {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .weapon-tray {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .weapon-slot-btn {
+            background: linear-gradient(180deg, #1e293b, #0f172a);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #38bdf8;
+            padding: 8px 14px;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 140px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+        .weapon-slot-btn:hover:not(:disabled) {
+            background: linear-gradient(180deg, #334155, #1e293b);
+            border-color: #38bdf8;
+        }
+
+        .craft-btn {
+            background: linear-gradient(180deg, #a855f7, #9333ea) !important;
+            border-color: rgba(192, 132, 252, 0.5) !important;
+            color: #f3e8ff !important;
+            box-shadow: 0 4px 0 #581c87, 0 4px 10px rgba(0,0,0,0.4) !important;
+        }
+
+        .punch-slot-btn {
+            background: linear-gradient(180deg, #f43f5e, #e11d48) !important;
+            border-color: rgba(251, 113, 133, 0.5) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 0 #9f1239, 0 4px 10px rgba(0,0,0,0.4) !important;
+        }
+
+        .catapult-station {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 12px;
+            border-radius: 16px;
+            border: 2px solid rgba(245, 158, 11, 0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        #turn-indicator {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 15px;
+            font-weight: 600;
+            color: #fbbf24;
+            z-index: 10;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        #game-over-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(8px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .big-restart-btn {
+            background: linear-gradient(180deg, #22c55e, #16a34a);
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 16px 40px;
+            font-size: 22px;
+            font-weight: 700;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #15803d, 0 12px 30px rgba(34, 197, 94, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. ՄԱԿԱՐԴԱԿԻ ԸՆՏՐՈՒԹՅԱՆ ԷԿՐԱՆ -->
+    <div id="screen-difficulty" class="screen active-screen">
+        <div class="box-container">
+            <h2>Ընտրե՛ք մակարդակը</h2>
+            <p style="color: #94a3b8; margin-bottom: 25px; font-size: 16px;">Պատրաստվե՛ք էպիկական ճակատամարտի:</p>
+            <button onclick="selectDifficulty('easy')" style="background: linear-gradient(180deg, #22c55e, #16a34a); width: 100%; margin-bottom: 12px; font-size: 16px; padding: 14px; border-radius: 12px;">🟢 Հեշտ</button>
+            <button onclick="selectDifficulty('medium')" style="background: linear-gradient(180deg, #eab308, #ca8a04); width: 100%; margin-bottom: 12px; font-size: 16px; padding: 14px; border-radius: 12px;">🟡 Միջին</button>
+            <button onclick="selectDifficulty('hard')" style="background: linear-gradient(180deg, #ef4444, #dc2626); width: 100%; font-size: 16px; padding: 14px; border-radius: 12px;">🔴 Բարդ</button>
+        </div>
+    </div>
+
+    <!-- 2. ԶԻՆԱՆՈՑԻ ԷԿՐԱՆ -->
+    <div id="screen-prep" class="screen">
+        <div class="box-container" style="max-width: 800px;">
+            <h2>🛒 Զենքերի Զինանոց</h2>
+            <p style="font-size: 16px; margin: 10px 0;">Ձեր Ոսկին: <span id="prep-gold" style="color: #fbbf24; font-weight: bold; font-size: 20px;">60</span> 🪙</p>
+            <div id="prep-shop-weapons" style="margin: 20px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></div>
+            
+            <h3 style="margin: 20px 0 8px 0; font-size: 16px; color: #cbd5e1;">Ընտրված զենքերը:</h3>
+            <div id="prep-player-weapons" style="min-height: 55px; padding: 12px; background: rgba(15, 23, 42, 0.6); border: 2px dashed rgba(255,255,255,0.15); border-radius: 14px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;"></div>
+
+            <div id="prep-error" style="color: #f87171; margin-top: 8px; font-size: 13px; min-height: 18px;"></div>
+            <button style="background: linear-gradient(180deg, #22c55e, #16a34a); font-size: 16px; padding: 12px 24px; width: 100%; margin-top: 15px; border-radius: 12px;" onclick="startBattle()">🚀 Սկսել Ճակատամարտը</button>
+        </div>
+    </div>
+
+    <!-- 3. ՄԱՐՏԻ ԷԿՐԱՆ -->
+    <div id="screen-battle" class="screen">
+        <div class="battle-arena-container">
+            <div id="turn-indicator">✨ Ձեր հերթն է</div>
+
+            <div id="game-over-overlay">
+                <h2 id="overlay-title" style="color: #4ade80; font-size: 38px; margin-bottom: 25px;"></h2>
+                <button class="big-restart-btn" onclick="location.reload()">🔄 Նորից խաղալ</button>
+            </div>
+
+            <canvas id="battleCanvas" width="1920" height="700"></canvas>
+
+            <!-- Առանձին սիրուն կոճակներ և կատապուլտ առանց սև վահանակի շրջանակի -->
+            <div id="hud-left-panel">
+                <div class="weapon-tray" id="hud-weapon-tray"></div>
+                <div class="catapult-station">
+                    <span style="font-size: 10px; color: #fbbf24; font-weight: 700; letter-spacing: 1px;">ԿԱՏԱՊՈՒԼՏ</span>
+                    <div id="loaded-slot" style="width: 55px; height: 55px; background: #090d16; border: 2px dashed rgba(245,158,11,0.4); border-radius: 12px; display: flex; align-items: center; justify-content: center;"></div>
+                    <button id="fire-btn" onclick="fireCatapult()" style="background: linear-gradient(180deg, #22c55e, #16a34a); width: 100%; font-size: 12px; padding: 7px; border-radius: 8px;" disabled>🔥 Կրակել</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let difficulty = "medium";
+        let currentTurn = 0;
+        let gameOver = false;
+        let winnerText = "";
+
+        let players = [
+            { id: 0, name: "Դու", hp: 100, maxHp: 100, gold: 60, weapons: [], castleX: 240 },
+            { id: 1, name: "Բոտ", hp: 100, maxHp: 100, gold: 60, weapons: [], castleX: 1680 }
+        ];
+
+        let shopWeapons = [
+            { name: "Քար", type: "rock", price: 5, damage: 10 },
+            { name: "Դանակ", type: "knife", price: 13, damage: 15 },
+            { name: "Սուր", type: "sword", price: 20, damage: 25 },
+            { name: "Կացին", type: "axe", price: 35, damage: 45 }
+        ];
+
+        let loadedWeapon = null;
+        let flyingProjectile = null;
+        let particles = [];
+
+        const canvas = document.getElementById("battleCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function drawCustomIcon(ctx, type, x, y, size) {
+            ctx.save();
+            ctx.translate(x, y);
+            if (type === "rock" || type.includes("Քար")) {
+                ctx.fillStyle = "#64748b"; ctx.strokeStyle = "#334155"; ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(-size * 0.5, size * 0.3); ctx.lineTo(-size * 0.7, -size * 0.1);
+                ctx.lineTo(-size * 0.3, -size * 0.7); ctx.lineTo(size * 0.3, -0.6 * size);
+                ctx.lineTo(size * 0.7, size * 0.2); ctx.lineTo(size * 0.4, size * 0.7);
+                ctx.closePath(); ctx.fill(); ctx.stroke();
+            } else if (type === "punch") {
+                ctx.fillStyle = "#f43f5e"; ctx.strokeStyle = "#9f1239"; ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(0, 0, size * 0.45, 0, Math.PI * 2);
+                ctx.fill(); ctx.stroke();
+            } else if (type === "knife" || type.includes("Դանակ")) {
+                ctx.fillStyle = "#cbd5e1"; ctx.strokeStyle = "#475569"; ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(-size * 0.4, size * 0.4); ctx.lineTo(size * 0.6, -size * 0.6);
+                ctx.lineTo(size * 0.4, -size * 0.8); ctx.lineTo(-size * 0.6, size * 0.2);
+                ctx.closePath(); ctx.fill(); ctx.stroke();
+            } else if (type === "sword" || type.includes("Սուր")) {
+                ctx.fillStyle = "#38bdf8"; ctx.strokeStyle = "#0284c7"; ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(-size * 0.5, size * 0.5); ctx.lineTo(size * 0.8, -size * 0.8);
+                ctx.lineTo(size * 0.6, -size * 1.0); ctx.lineTo(-size * 0.8, size * 0.2);
+                ctx.closePath(); ctx.fill(); ctx.stroke();
+            } else if (type === "axe" || type.includes("Կացին")) {
+                ctx.fillStyle = "#f97316"; ctx.strokeStyle = "#c2410c"; ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(0, -size * 0.3, size * 0.5, 0, Math.PI);
+                ctx.fill(); ctx.stroke();
+                ctx.fillStyle = "#78350f"; ctx.fillRect(-size * 0.12, -size * 0.3, size * 0.25, size * 0.9);
+            }
+            ctx.restore();
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
+            document.getElementById(screenId).classList.add('active-screen');
+            if(screenId === 'screen-battle') requestAnimationFrame(gameLoop);
+        }
+
+        function selectDifficulty(diff) {
+            difficulty = diff;
+            botPrepWeapons();
+            updatePrepUI();
+            showScreen('screen-prep');
+        }
+
+        function botPrepWeapons() {
+            let bot = players[1];
+            let budget = bot.gold;
+            while (budget >= 5) {
+                let affordable = shopWeapons.filter(w => w.price <= budget);
+                if (affordable.length === 0) break;
+                let chosen = difficulty === 'hard' ? affordable[affordable.length - 1] : affordable[Math.floor(Math.random() * affordable.length)];
+                bot.gold -= chosen.price;
+                bot.weapons.push({ name: chosen.name, type: chosen.type, damage: chosen.damage });
+                budget = bot.gold;
+            }
+        }
+
+        function buyPrepWeapon(index) {
+            let p = players[0];
+            let w = shopWeapons[index];
+            let errDiv = document.getElementById("prep-error");
+            if (p.gold >= w.price) {
+                p.gold -= w.price;
+                p.weapons.push({ name: w.name, type: w.type, damage: w.damage });
+                errDiv.innerText = "";
+                updatePrepUI();
+            } else {
+                errDiv.innerText = "Ոսկին բավարար չէ:";
+            }
+        }
+
+        function updatePrepUI() {
+            document.getElementById("prep-gold").innerText = players[0].gold;
+            let shopContainer = document.getElementById("prep-shop-weapons");
+            shopContainer.innerHTML = "";
+            shopWeapons.forEach((w, index) => {
+                let btn = document.createElement("button");
+                btn.innerHTML = `${w.name} — ${w.price} 🪙 (${w.damage} վնաս)`;
+                btn.onclick = () => buyPrepWeapon(index);
+                shopContainer.appendChild(btn);
+            });
+
+            let myWeaponsContainer = document.getElementById("prep-player-weapons");
+            myWeaponsContainer.innerHTML = "";
+            if (players[0].weapons.length === 0) {
+                myWeaponsContainer.innerHTML = `<span style="color: #64748b; font-size: 12px; font-style: italic;">Զենքեր դեռ ընտրված չեն</span>`;
+            } else {
+                let counts = {};
+                players[0].weapons.forEach(w => counts[w.name] = (counts[w.name] || 0) + 1);
+                for (let name in counts) {
+                    let span = document.createElement("span");
+                    span.style.cssText = "display: inline-flex; align-items: center; background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; padding: 6px 12px; border-radius: 10px; font-size: 13px; gap: 6px;";
+                    span.innerHTML = `${name} <strong>x${counts[name]}</strong>`;
+                    myWeaponsContainer.appendChild(span);
+                }
+            }
+        }
+
+        function startBattle() {
+            showScreen('screen-battle');
+            updateHUD();
+        }
+
+        // Զենքը կամ բռունցքը կատապուլտ բեռնել
+        function loadWeaponToCatapult(weaponName, isPunch = false) {
+            if (currentTurn !== 0 || flyingProjectile || gameOver) return;
+            
+            if (isPunch) {
+                if (loadedWeapon) players[0].weapons.push(loadedWeapon);
+                loadedWeapon = { name: "Բռունցք", type: "punch", damage: 2 };
+                updateHUD();
+                return;
+            }
+
+            let p = players[0];
+            let index = p.weapons.findIndex(w => w.name === weaponName);
+            if (index !== -1) {
+                if (loadedWeapon && loadedWeapon.name !== "Բռունցք") {
+                    p.weapons.push(loadedWeapon);
+                }
+                loadedWeapon = p.weapons.splice(index, 1)[0];
+                updateHUD();
+            }
+        }
+
+        // Միաձուլման ֆունկցիա (Craft)
+        function craftWeapon(weaponName) {
+            if (currentTurn !== 0 || flyingProjectile || gameOver) return;
+            let p = players[0];
+            let matches = p.weapons.filter(w => w.name === weaponName);
+            if (matches.length >= 2) {
+                let type = matches[0].type;
+                let removed = 0;
+                p.weapons = p.weapons.filter(w => {
+                    if (w.name === weaponName && removed < 2) {
+                        removed++;
+                        return false;
+                    }
+                    return true;
+                });
+                let base = shopWeapons.find(w => w.name === weaponName);
+                let baseDmg = base ? base.damage : matches[0].damage;
+                p.weapons.push({ name: weaponName + " (Ամրացված)", type: type, damage: Math.round(baseDmg * 2.2) });
+                updateHUD();
+            }
+        }
+
+        // Կրակել կատապուլտից
+        function fireCatapult() {
+            if (!loadedWeapon || currentTurn !== 0 || flyingProjectile || gameOver) return;
+            
+            let weapon = loadedWeapon;
+            loadedWeapon = null;
+            
+            let target = players[1];
+            let p = players[0];
+
+            if (weapon.damage > target.hp && weapon.name !== "Բռունցք") {
+                alert("Վնասը գերազանցում է թշնամու կյանքը (Overkill արգելված է):");
+                p.weapons.push(weapon);
+                updateHUD();
+                return;
+            }
+
+            let startX = p.castleX;
+            let targetX = target.castleX;
+
+            flyingProjectile = {
+                startX: startX, startY: 520,
+                targetX: targetX, targetY: 520,
+                type: weapon.type,
+                progress: 0,
+                speed: 0.015,
+                onComplete: () => {
+                    target.hp -= weapon.damage;
+                    if (target.hp < 0) target.hp = 0;
+                    createExplosionParticles(targetX, 530);
+
+                    checkGameOver();
+                    if (!gameOver) {
+                        switchTurn();
+                    }
+                    updateHUD();
+                }
+            };
+            updateHUD();
+        }
+
+        function createExplosionParticles(x, y) {
+            for (let i = 0; i < 35; i++) {
+                particles.push({
+                    x: x, y: y,
+                    vx: (Math.random() - 0.5) * 14,
+                    vy: (Math.random() - 0.7) * 12,
+                    radius: Math.random() * 6 + 2,
+                    color: Math.random() > 0.5 ? "#f59e0b" : "#cbd5e1",
+                    alpha: 1,
+                    decay: Math.random() * 0.02 + 0.012
+                });
+            }
+        }
+
+        function switchTurn() {
+            currentTurn = 1 - currentTurn;
+            if (currentTurn === 1 && !gameOver) {
+                setTimeout(botTurn, 1000);
+            }
+        }
+
+        function botTurn() {
+            if (gameOver) return;
+            let bot = players[1];
+            let human = players[0];
+
+            let validWeapons = bot.weapons.filter(w => w.damage <= human.hp);
+            let chosenWeapon = null;
+            if (validWeapons.length > 0) {
+                if (difficulty === 'hard') {
+                    validWeapons.sort((a, b) => b.damage - a.damage);
+                    chosenWeapon = validWeapons[0];
+                } else {
+                    chosenWeapon = validWeapons[Math.floor(Math.random() * validWeapons.length)];
+                }
+            }
+
+            if (chosenWeapon) {
+                let wIndex = bot.weapons.indexOf(chosenWeapon);
+                bot.weapons.splice(wIndex, 1);
+
+                let startX = bot.castleX;
+                let targetX = human.castleX;
+
+                flyingProjectile = {
+                    startX: startX, startY: 520,
+                    targetX: targetX, targetY: 520,
+                    type: chosenWeapon.type,
+                    progress: 0,
+                    speed: 0.015,
+                    onComplete: () => {
+                        human.hp -= chosenWeapon.damage;
+                        if (human.hp < 0) human.hp = 0;
+                        createExplosionParticles(targetX, 530);
+
+                        checkGameOver();
+                        if (!gameOver) {
+                            switchTurn();
+                        }
+                        updateHUD();
+                    }
+                };
+            } else {
+                // Եթե բոտի զենքերը վերջացել են, հարվածում է բռունցքով
+                let startX = bot.castleX;
+                let targetX = human.castleX;
+                flyingProjectile = {
+                    startX: startX, startY: 520,
+                    targetX: targetX, targetY: 520,
+                    type: "punch",
+                    progress: 0,
+                    speed: 0.02,
+                    onComplete: () => {
+                        human.hp -= 2;
+                        if (human.hp < 0) human.hp = 0;
+                        createExplosionParticles(targetX, 530);
+                        checkGameOver();
+                        if (!gameOver) switchTurn();
+                        updateHUD();
+                    }
+                };
+            }
+            updateHUD();
+        }
+
+        function checkGameOver() {
+            if (players[0].hp <= 0 || players[1].hp <= 0) {
+                gameOver = true;
+                winnerText = players[0].hp > players[1].hp ? "🎉 Հաղթեցիր դու!" : "⚔️ Հաղթեց Բոտը!";
+            }
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Երկինք
+            let skyGrad = ctx.createLinearGradient(0, 0, 0, 540);
+            skyGrad.addColorStop(0, "#0284c7");
+            skyGrad.addColorStop(0.6, "#38bdf8");
+            skyGrad.addColorStop(1, "#bae6fd");
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, canvas.width, 540);
+
+            // Գետին
+            ctx.fillStyle = "#15803d";
+            ctx.fillRect(0, 540, canvas.width, 160);
+            ctx.fillStyle = "#22c55e";
+            ctx.fillRect(0, 540, canvas.width, 12);
+
+            // Ամրոցներ
+            drawCastleWithDamage(players[0]);
+            drawCastleWithDamage(players[1]);
+
+            // HP բարեր
+            drawHpBarAboveCastle(players[0]);
+            drawHpBarAboveCastle(players[1]);
+
+            // Թռչող արկ
+            if (flyingProjectile) {
+                flyingProjectile.progress += flyingProjectile.speed;
+                if (flyingProjectile.progress >= 1) {
+                    let cb = flyingProjectile.onComplete;
+                    flyingProjectile = null;
+                    if (cb) cb();
+                } else {
+                    let currentX = flyingProjectile.startX + (flyingProjectile.targetX - flyingProjectile.startX) * flyingProjectile.progress;
+                    let heightCurve = Math.sin(flyingProjectile.progress * Math.PI) * 260;
+                    let currentY = flyingProjectile.startY - heightCurve;
+                    drawCustomIcon(ctx, flyingProjectile.type, currentX, currentY, 40);
+                }
+            }
+
+            // Մասնիկներ
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i];
+                p.x += p.vx; p.y += p.vy; p.alpha -= p.decay;
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                } else {
+                    ctx.fillStyle = p.color; ctx.globalAlpha = p.alpha;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
+                    ctx.globalAlpha = 1.0;
+                }
+            }
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        function drawCastleWithDamage(player) {
+            let x = player.castleX;
+            let hpPercent = player.hp / player.maxHp;
+
+            ctx.save();
+            ctx.translate(x, 540);
+
+            ctx.fillStyle = "#1e293b";
+            ctx.fillRect(-65, -200, 130, 200);
+
+            ctx.fillRect(-72, -235, 30, 35);
+            ctx.fillRect(-15, -235, 30, 35);
+            ctx.fillRect(42, -235, 30, 35);
+
+            ctx.fillStyle = "#090d16";
+            ctx.fillRect(-20, -70, 40, 70);
+            ctx.beginPath();
+            ctx.arc(0, -70, 20, Math.PI, 0, false);
+            ctx.fill();
+
+            if (hpPercent < 0.8) {
+                ctx.fillStyle = "rgba(15, 23, 42, 0.7)";
+                ctx.beginPath();
+                ctx.arc(-30, -130, 22, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            if (hpPercent < 0.5) {
+                ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
+                ctx.fillRect(10, -110, 35, 50);
+                ctx.fillStyle = "#475569";
+                ctx.fillRect(-50, -170, 15, 15);
+                ctx.fillRect(35, -190, 12, 12);
+            }
+            if (hpPercent < 0.25) {
+                ctx.fillStyle = "#020617";
+                ctx.beginPath();
+                ctx.arc(20, -60, 30, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        function drawHpBarAboveCastle(player) {
+            let x = player.castleX;
+            let barWidth = 90;
+            let barHeight = 10;
+            let yPos = 260;
+
+            ctx.save();
+            ctx.translate(x, yPos);
+
+            ctx.fillStyle = "rgba(15, 23, 42, 0.8)";
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(-barWidth / 2, 0, barWidth, barHeight, 5);
+            ctx.fill();
+            ctx.stroke();
+
+            let fillW = (player.hp / player.maxHp) * (barWidth - 4);
+            if (fillW < 0) fillW = 0;
+            ctx.fillStyle = player.hp > 40 ? "#22c55e" : "#ef4444";
+            ctx.beginPath();
+            ctx.roundRect(-barWidth / 2 + 2, 2, fillW, barHeight - 4, 3);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function updateHUD() {
+            let tray = document.getElementById("hud-weapon-tray");
+            tray.innerHTML = "";
+
+            let p = players[0];
+            let counts = {};
+            p.weapons.forEach(w => counts[w.name] = (counts[w.name] || 0) + 1);
+
+            // 1. Անսահմանափակ բռունցքի կոճակ
+            let punchBtn = document.createElement("button");
+            punchBtn.className = "weapon-slot-btn punch-slot-btn";
+            punchBtn.innerHTML = `<span>✊ Բռունցք</span> <strong>∞</strong>`;
+            punchBtn.onclick = () => loadWeaponToCatapult("Բռունցք", true);
+            if (currentTurn !== 0 || flyingProjectile || gameOver) punchBtn.disabled = true;
+            tray.appendChild(punchBtn);
+
+            // 2. Սովորական զենքերի կոճակներ
+            for (let name in counts) {
+                let btn = document.createElement("button");
+                btn.className = "weapon-slot-btn";
+                btn.innerHTML = `<span>${name}</span> <strong>x${counts[name]}</strong>`;
+                btn.onclick = () => loadWeaponToCatapult(name);
+                if (currentTurn !== 0 || flyingProjectile || gameOver) btn.disabled = true;
+                tray.appendChild(btn);
+
+                // Միաձուլման (Craft) կոճակ, եթե կա 2 կամ ավելի միանման զենք
+                if (counts[name] >= 2 && !name.includes("Ամրացված")) {
+                    let craftBtn = document.createElement("button");
+                    craftBtn.className = "weapon-slot-btn craft-btn";
+                    craftBtn.innerHTML = `<span>✨ Միաձուլել 2x ${name}</span>`;
+                    craftBtn.onclick = () => craftWeapon(name);
+                    if (currentTurn !== 0 || flyingProjectile || gameOver) craftBtn.disabled = true;
+                    tray.appendChild(craftBtn);
+                }
+            }
+
+            // Կատապուլտի վիճակ
+            let loadedSlot = document.getElementById("loaded-slot");
+            loadedSlot.innerHTML = "";
+            if (loadedWeapon) {
+                let iconText = document.createElement("div");
+                iconText.innerText = loadedWeapon.name;
+                iconText.style.cssText = "font-size: 11px; color: #fbbf24; font-weight: bold; text-align: center;";
+                loadedSlot.appendChild(iconText);
+                document.getElementById("fire-btn").disabled = (currentTurn !== 0 || flyingProjectile || gameOver);
+            } else {
+                loadedSlot.innerHTML = `<span style="font-size: 10px; color: #475569;">Դատարկ</span>`;
+                document.getElementById("fire-btn").disabled = true;
+            }
+
+            let indicator = document.getElementById("turn-indicator");
+            if (gameOver) {
+                indicator.innerText = winnerText;
+                document.getElementById("game-over-overlay").style.display = "flex";
+                document.getElementById("overlay-title").innerText = winnerText;
+            } else if (currentTurn === 0) {
+                indicator.innerText = "✨ Ձեր հերթն է (Ընտրե՛ք զենք)";
+            } else {
+                indicator.innerText = "⚔️ Բոտը կրակում է...";
+            }
+        }
+
+        showScreen('screen-difficulty');
+    </script>
+</body>
+</html>
